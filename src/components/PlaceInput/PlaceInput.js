@@ -11,12 +11,20 @@ export default class PlaceInput extends Component {
     this.setState({ placeName: val });
   };
 
+  placeSubmitHandler = () => {
+    if (this.state.placeName.trim() === "") {
+      return;
+    }
+
+    this.props.onPlaceAdded(this.state.placeName);
+  };
+
   render() {
 
     return (
       <View style={styles.inputContainer}>
           <TextInput style={ styles.placeInput } placeholder="Place goes here..." value={this.state.placeName} onChangeText={this.placeNameChangedHandler}/>
-          <Button style={styles.placeButton} title="Add" onPress={ () => this.props.placeSubmitHandler(this.props.currentCount, this.state.placeName) } />
+          <Button style={styles.placeButton} title="Add" onPress={ this.placeSubmitHandler } />
       </View>
     );
 
