@@ -3,11 +3,15 @@ import { TouchableOpacity, TouchableNativeFeedback, Text, View, StyleSheet, Plat
 
 const customButton = (props) => {
     const content = (
-        <View style={[styles.button, { backgroundColor: props.backgroundColor }]}>
-            <Text style={[{color:props.textColor}]}>{props.children}</Text>
+        <View style={[styles.button, 
+                        { backgroundColor: props.backgroundColor }, 
+                        props.disabled ? styles.disabled : null]}>
+            <Text style={[{color:props.textColor}, props.disabled ? styles.disabledText : null]}>{props.children}</Text>
         </View>
     );
-
+    if (props.disabled) {
+        return content;
+    }
     if (Platform.OS === 'android') {
         return (<TouchableNativeFeedback onPress={ props.onPress } >
                     {content}
@@ -26,6 +30,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#eee",
         alignItems: "center"
+    },
+    disabled: {
+        backgroundColor: "#eee",
+        borderColor: "#aaa"
+    }, 
+    disabledText:{
+        color: "#aaa"
     }
 });
 

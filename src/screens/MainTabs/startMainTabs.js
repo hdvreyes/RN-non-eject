@@ -42,13 +42,13 @@ const startTabs = () => {
                 }
             ],
             tabsStyle: {
-                tabBarSelectedButtonColor: "white",
-                tabBarButtonColor: "#888",
+                tabBarSelectedButtonColor: "orange",
+                tabBarButtonColor: "yellow",
                 tabBarBackgroundColor: "#551A8B"
             },
             appStyle: {
-                tabBarSelectedButtonColor: "white",
-                tabBarButtonColor: "#888",
+                tabBarSelectedButtonColor: "orange",
+                tabBarButtonColor: "yellow",
                 tabBarBackgroundColor: "#551A8B"
 
             },
