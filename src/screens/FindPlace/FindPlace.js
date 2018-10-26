@@ -5,7 +5,7 @@ import PlaceList from '../../components/PlaceList/PlaceList';
 // import { PLACE_DETAILS } from '../../config/constants';
 import { PLACE_DETAILS } from '../../config/constants';
 // import styles from '../../styles/Styles';
-
+import { getPlaces } from '../../store/actions/index';
 class FindPlaceScreen extends Component {
     state = {
         placesLoaded: false,
@@ -18,6 +18,10 @@ class FindPlaceScreen extends Component {
     constructor(props) {
         super(props);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+    }
+
+    componentDidMount() {
+        this.props.onLoadPlaces()
     }
 
     onNavigatorEvent = (event) => {
@@ -37,6 +41,13 @@ class FindPlaceScreen extends Component {
             duration: 500,
             useNativeDriver: true
         }).start();
+
+        this.setState(prevState => {
+            return {
+                ...prevState.removeAnimation,
+                placesLoaded: true
+            };
+        });
     }
 
     itemSelectedHandler = (key) => {
@@ -106,4 +117,11 @@ const mapStateProps = state => {
         places: state.places.places
     };
 };
-export default connect(mapStateProps)(FindPlaceScreen);
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLoadPlaces: () => dispatch(getPlaces())
+    };
+};
+
+export default connect(mapStateProps, mapDispatchToProps)(FindPlaceScreen);

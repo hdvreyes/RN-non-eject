@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import { View, Text, Button, StyleSheet, Image, TouchableOpacity, Platform } from 'react-native';
-// Import Library Icons
+import { View, Text, Button, StyleSheet, Image, TouchableOpacity, Platform, Dimensions, ScrollView } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { deletePlace } from '../../store/actions/index';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 
 class PlaceDetail extends Component {
     placeDeletedHandler = () => {
@@ -12,13 +12,32 @@ class PlaceDetail extends Component {
     }
 
     render() {
+        let marker = null;
+        let location = null;
+        if (this.props.selectedPlace.location) {
+            location = {
+                ...this.props.selectedPlace.location,
+                latitudeDelta: 0.0122,
+                longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122
+            };
+            marker = <MapView.Marker coordinate={location} />
+        }
+
+
+
         return(
             <View style={styles.container} >
                 <View>
                     <Image style={styles.placeImage} source={this.props.selectedPlace.image} />
+                    <MapView
+                        style={styles.map}
+                        provider={PROVIDER_GOOGLE}
+                        initialRegion={location}>
+                            {marker}
+                    </MapView>
                     <Text style={styles.placeName}>{this.props.selectedPlace.name}</Text>
                 </View>
-                <View>            
+                <View>
                     <TouchableOpacity style={styles.deleteButton} 
                                       activeOpacity={0.9} 
                                       onPress={this.placeDeletedHandler}>
@@ -29,6 +48,7 @@ class PlaceDetail extends Component {
                 </View>
             </View>
         );
+
     }    
 }
 
@@ -42,6 +62,7 @@ const styles = StyleSheet.create({
     placeImage: {
         width: "100%",
         height: 200,
+        marginBottom: 10
     },
     placeName: {
         fontWeight: "bold",
@@ -54,7 +75,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 5
         
-    }
+    },
+    map: {
+        width: "100%",
+        height: 200
+    },
 
 });
 

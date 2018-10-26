@@ -57,5 +57,15 @@
 	<array>
 		<string>Ionicons.ttf</string>
 	</array>
+	<key>NSLocationUsageDescription</key>
+	<string>We need your location to share!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>{PRODUCT_NAME} would like to access your photos!</string>
+	<key>NSCameraUsageDescription</key>
+	<string>{PRODUCT_NAME} would like to use your camera!</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>{PRODUCT_NAME} would like to save photos to your photo gallery!</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>{PRODUCT_NAME} would like use your microphone!</string>
 </dict>
 </plist>
