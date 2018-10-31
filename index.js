@@ -15,3 +15,5 @@
 // );
 // AppRegistry.registerComponent(appName, () => RNRedux);
 import App from './App';
+
+App();

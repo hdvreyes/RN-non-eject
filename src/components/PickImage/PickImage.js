@@ -8,6 +8,14 @@ class PickImage extends Component {
     state = {
         pickedImage: null
     }
+
+    reset = () => {
+        console.log("RESET AGAIN!!!");
+        this.setState({
+            pickedImage: null
+        });
+    }
+
     pickImageHandler = () => {
             // More info on all the options is below in the API Reference... just some common use cases shown here
             const options = {
@@ -16,13 +24,15 @@ class PickImage extends Component {
                 skipBackup: true,
                 path: 'images',
             },
+            maxWidth: 100,
+            maxHeight: 100
         };
 
         /**
         * The first arg is the options object for customization (it can also be null or omitted for default options),
         * The second arg is the callback which sends object: response (more info in the API Reference)
         */
-        ImagePicker.showImagePicker({options}, (response) => {
+        ImagePicker.showImagePicker({title: "Image", maxWidth: 800, maxHeight: 600}, (response) => {
             console.log('Response = ', response);
 
             if (response.didCancel) {

@@ -17,10 +17,10 @@ Navigation.registerComponent(AUTH, () => AuthScreen, store, Provider);
 Navigation.registerComponent(SHARE_PLACE, () => SharePlace, store, Provider);
 Navigation.registerComponent(FIND_PLACE, () => FindPlace, store, Provider);
 Navigation.registerComponent(PLACE_DETAILS, () => PlaceDetail, store, Provider);
-Navigation.registerComponent(SIDE_DRAWER, () => SideDrawer);
+Navigation.registerComponent(SIDE_DRAWER, () => SideDrawer, store, Provider);
 
 // Start App
-Navigation.startSingleScreenApp({
+export default () => Navigation.startSingleScreenApp({
   screen: {
     screen: AUTH,
     title: "Login"
