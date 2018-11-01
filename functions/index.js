@@ -66,7 +66,8 @@ exports.storeImage = functions.https.onRequest((request, response) => {
                         "/o/" + 
                         encodeURIComponent(file.name) + 
                         "?alt=media&token=" + 
-                        uuid
+                        uuid,
+                        imagePath: "/places/" + uuid + ".jpg"
                     });
                 } else {
                     return response.status(500).json({error: err});
@@ -80,4 +81,21 @@ exports.storeImage = functions.https.onRequest((request, response) => {
  
     });
     
+});
+
+exports.deleImage = functions.database.ref("/places/{placeId}").onDelete((snap, context) => {
+    const placeData = snap.val();
+    const imagePath = placeData.imagePath;
+
+    const gcs = new Storage(gcconfig);
+    const bucket = gcs.bucket("gs://skeleton-dev-27913.appspot.com");
+    return bucket.file(imagePath).delete();
+
+    // // Create a new bucket.
+    // gcs.createBucket("gs://skeleton-dev-27913.appspot.com", (err, bucket) => {
+    //     if (!err) {
+    //         // "my-new-bucket" was successfully created.
+    //         console.log("Bucket created!");
+    //     }
+    // });    
 });

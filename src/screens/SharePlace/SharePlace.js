@@ -8,6 +8,8 @@ import PlaceInput from '../../components/PlaceInput/PlaceInput';
 import PickImage from '../../components/PickImage/PickImage';
 import PickLocation from '../../components/PickLocation/PickLocation';
 import validate from '../../utility/validation';
+import { startAddPlace } from '../../store/actions/index';
+
 class SharePlaceScreen extends Component {
     static navigatorStyle = {
         navBarButtonColor: "#888"
@@ -76,9 +78,20 @@ class SharePlaceScreen extends Component {
             };
         });
     };
+    
+    componentDidUpdate() {
+        if (this.props.placeAdded) {
+            this.props.navigator.switchToTab({tabIndex: 0});
+        }
+    }
 
     onNavigatorEvent = (event) => {
         console.log(event);
+        if (event.type === "ScreenChangedEvent") {
+            if (event.id === "willAppear") {
+                this.props.onStartAddPlace();
+            }
+        }
         if (event.type === "NavBarButtonPress") {
             if (event.id === "sideDrawerToggle") {
                 this.props.navigator.toggleDrawer({
@@ -183,13 +196,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        isLoading: state.ui.isLoading
+        isLoading: state.ui.isLoading,
+        placeAdded: state.places.placeAdded
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return { 
-        onAddPlace: (placeName, location, image) => dispatch(addPlace(placeName, location, image))
+        onAddPlace: (placeName, location, image) => dispatch(addPlace(placeName, location, image)),
+        onStartAddPlace: () => dispatch(startAddPlace())
     };
 };
 
